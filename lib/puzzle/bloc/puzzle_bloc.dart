@@ -20,6 +20,25 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   final Random? random;
 
+  // Image value acts as key, value is [up, down, left, right]
+  final map = [
+    [false, true, true, true],
+    [false, true, true, false],
+    [true, false, true, false],
+    [true, false, false, true],
+    [false, true, false, true],
+    [true, true, true, true],
+    [true, true, false, false],
+    [false, true, true, true],
+    [false, true, true, false],
+    [false, true, true, false],
+    [true, false, true, false],
+    [true, false, false, true],
+    [true, false, false, true],
+    [true, false, false, true],
+    [false, true, false, true],
+  ];
+
   void _onPuzzleInitialized(
     PuzzleInitialized event,
     Emitter<PuzzleState> emit,
@@ -119,7 +138,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     if (shuffle) {
       // Assign the tiles new current positions until the puzzle is solvable and
       // zero tiles are in their correct position.
-      while (!puzzle.isSolvable() || puzzle.getNumberOfCorrectTiles() != 0) {
+      while (!puzzle.isSolvable()) {
         currentPositions.shuffle(random);
         tiles = _getTileListFromPositions(
           size,
@@ -155,6 +174,10 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
             value: i,
             correctPosition: correctPositions[i - 1],
             currentPosition: currentPositions[i - 1],
+            up: map[i - 1][0],
+            down: map[i - 1][1],
+            left: map[i - 1][2],
+            right: map[i - 1][3],
           )
     ];
   }
