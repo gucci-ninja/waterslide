@@ -7,7 +7,7 @@ import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
-import 'package:very_good_slide_puzzle/simple/simple.dart';
+// import 'package:very_good_slide_puzzle/simple/simple.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/timer/timer.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
@@ -44,7 +44,6 @@ class PuzzlePage extends StatelessWidget {
         BlocProvider(
           create: (context) => ThemeBloc(
             initialThemes: [
-              const SimpleTheme(),
               context.read<DashatarThemeBloc>().state.theme,
             ],
           ),
@@ -75,7 +74,7 @@ class PuzzleView extends StatelessWidget {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
 
     /// Shuffle only if the current theme is Simple.
-    final shufflePuzzle = theme is SimpleTheme;
+    final shufflePuzzle = false;
 
     return Scaffold(
       body: AnimatedContainer(
@@ -124,8 +123,6 @@ class _Puzzle extends StatelessWidget {
       builder: (context, constraints) {
         return Stack(
           children: [
-            if (theme is SimpleTheme)
-              theme.layoutDelegate.backgroundBuilder(state),
             SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
@@ -139,8 +136,7 @@ class _Puzzle extends StatelessWidget {
                 ),
               ),
             ),
-            if (theme is! SimpleTheme)
-              theme.layoutDelegate.backgroundBuilder(state),
+            theme.layoutDelegate.backgroundBuilder(state),
           ],
         );
       },
@@ -452,7 +448,7 @@ class PuzzleMenuItem extends StatelessWidget {
                 // Initialize the puzzle board for the newly selected theme.
                 context.read<PuzzleBloc>().add(
                       PuzzleInitialized(
-                        shufflePuzzle: theme is SimpleTheme,
+                        shufflePuzzle: false,
                       ),
                     );
               },
