@@ -58,13 +58,14 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       if (state.puzzle.isTileMovable(tappedTile)) {
         final mutablePuzzle = Puzzle(tiles: [...state.puzzle.tiles]);
         final puzzle = mutablePuzzle.moveTiles(tappedTile, []);
-        if (puzzle.isComplete()) {
+        final puzzleFinal = puzzle.sort();
+        if (puzzleFinal.isComplete()) {
           emit(
             state.copyWith(
-              puzzle: puzzle.sort(),
+              puzzle: puzzleFinal,
               puzzleStatus: PuzzleStatus.complete,
               tileMovementStatus: TileMovementStatus.moved,
-              numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
+              numberOfCorrectTiles: puzzleFinal.getNumberOfCorrectTiles(),
               numberOfMoves: state.numberOfMoves + 1,
               lastTappedTile: tappedTile,
             ),
@@ -72,9 +73,9 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         } else {
           emit(
             state.copyWith(
-              puzzle: puzzle.sort(),
+              puzzle: puzzleFinal,
               tileMovementStatus: TileMovementStatus.moved,
-              numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
+              numberOfCorrectTiles: puzzleFinal.getNumberOfCorrectTiles(),
               numberOfMoves: state.numberOfMoves + 1,
               lastTappedTile: tappedTile,
             ),

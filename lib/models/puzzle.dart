@@ -67,7 +67,6 @@ class Puzzle extends Equatable {
 
   /// Gets the number of tiles that are currently in their correct position.
   int getNumberOfCorrectTiles2() {
-    print("getting complete tiles");
     final whitespaceTile = getWhitespaceTile();
     var numberOfCorrectTiles = 0;
     for (final tile in tiles) {
