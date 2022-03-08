@@ -66,7 +66,8 @@ class Puzzle extends Equatable {
   }
 
   /// Gets the number of tiles that are currently in their correct position.
-  int getNumberOfCorrectTiles() {
+  int getNumberOfCorrectTiles2() {
+    print("getting complete tiles");
     final whitespaceTile = getWhitespaceTile();
     var numberOfCorrectTiles = 0;
     for (final tile in tiles) {
@@ -76,7 +77,84 @@ class Puzzle extends Equatable {
         }
       }
     }
+    print(numberOfCorrectTiles);
     return numberOfCorrectTiles;
+  }
+
+  /// Gets the number of tiles that are currently in their correct position.
+  int getNumberOfCorrectTiles() {
+    print(tiles);
+    // If the first tile is not getting water, return 0
+    if (!tiles[0].up && !tiles[0].left) {
+      return 0;
+    }
+    final size = getDimension();
+    final array = List.generate(
+        size, (i) => List.filled(size, -1, growable: false),
+        growable: false);
+    array[0][0] = 1;
+    _dfs(0, 1, tiles[0], array, size);
+    _dfs(1, 0, tiles[0], array, size);
+    // final whitespaceTile = getWhitespaceTile();
+    var numberOfCorrectTiles = 0;
+    for (var i = 0; i < size; i++) {
+      for (var j = 0; j < size; j++) {
+        if (array[i][j] == 1) {
+          numberOfCorrectTiles++;
+        }
+      }
+    }
+    print(numberOfCorrectTiles);
+    return numberOfCorrectTiles;
+  }
+
+  void _dfs(int row, int col, Tile prevTile, List<List> array, int size) {
+    // Check if out of bounds
+    if (row < 0 || row >= size || col < 0 || col >= size) {
+      return;
+    }
+
+    // check if already checked
+    if (array[row][col] == 1) {
+      return;
+    }
+
+    final tile = tiles[row * size + col];
+    if (_isConnected(tile, prevTile)) {
+      array[row][col] = 1;
+      // call on all directions
+      _dfs(row, col + 1, tile, array, size);
+      _dfs(row, col - 1, tile, array, size);
+      _dfs(row + 1, col, tile, array, size);
+      _dfs(row - 1, col, tile, array, size);
+    } else {
+      return;
+    }
+    return;
+  }
+
+  bool _isConnected(Tile curr, Tile prev) {
+    final whitespaceTile = getWhitespaceTile();
+    if (curr == whitespaceTile || prev == whitespaceTile) {
+      return false;
+    }
+    // If to the right of previous tile
+    if (prev.currentPosition.x + 1 == curr.currentPosition.x) {
+      return curr.left && prev.right;
+    }
+    // If to the left of previous tile
+    if (prev.currentPosition.x - 1 == curr.currentPosition.x) {
+      return curr.right && prev.left;
+    }
+    // If below previous tile
+    if (prev.currentPosition.y + 1 == curr.currentPosition.y) {
+      return curr.up && prev.down;
+    }
+    // If above previous tile
+    if (prev.currentPosition.x - 1 == curr.currentPosition.y) {
+      return curr.down && prev.up;
+    }
+    return false;
   }
 
   /// Determines if the puzzle is completed.
@@ -201,7 +279,6 @@ class Puzzle extends Equatable {
         currentPosition: tile.currentPosition,
       );
     }
-
     return Puzzle(tiles: tiles);
   }
 
