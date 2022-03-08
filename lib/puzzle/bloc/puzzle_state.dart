@@ -35,7 +35,7 @@ class PuzzleState extends Equatable {
   final int numberOfCorrectTiles;
 
   /// Number of tiles currently not in their correct position.
-  int get numberOfTilesLeft => puzzle.tiles.length - numberOfCorrectTiles - 1;
+  int get numberOfTilesLeft => numberOfCorrectTiles;
 
   /// Number representing how many moves have been made on the current puzzle.
   ///
