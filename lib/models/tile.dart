@@ -15,6 +15,7 @@ class Tile extends Equatable {
     this.down = false,
     this.left = false,
     this.right = false,
+    this.filled = false,
   });
 
   /// Value representing the correct position of [Tile] in a list.
@@ -42,8 +43,11 @@ class Tile extends Equatable {
   /// Denote if the [Tile] gets water from the elft
   final bool left;
 
+  /// Denote if [Tile] is filled with water
+  final bool filled;
+
   /// Create a copy of this [Tile] with updated current position.
-  Tile copyWith({required Position currentPosition}) {
+  Tile copyWith({required Position currentPosition, bool filled = false}) {
     return Tile(
       value: value,
       correctPosition: correctPosition,
@@ -53,6 +57,22 @@ class Tile extends Equatable {
       down: down,
       left: left,
       right: right,
+      filled: filled,
+    );
+  }
+
+  /// Create a copy of this [Tile] with water filled
+  Tile fillWithWater(bool filled) {
+    return Tile(
+      value: value,
+      correctPosition: correctPosition,
+      currentPosition: currentPosition,
+      isWhitespace: isWhitespace,
+      up: up,
+      down: down,
+      left: left,
+      right: right,
+      filled: filled,
     );
   }
 
@@ -66,5 +86,6 @@ class Tile extends Equatable {
         down,
         left,
         right,
+        filled,
       ];
 }

@@ -22,21 +22,105 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   // Image value acts as key, value is [up, down, left, right]
   final map = [
-    [false, true, true, true],
-    [false, true, true, false],
-    [true, false, true, false],
-    [true, false, false, true],
-    [false, true, false, true],
-    [true, true, true, true],
-    [true, true, false, false],
-    [false, true, true, true],
-    [false, true, true, false],
-    [false, true, true, false],
-    [true, false, true, false],
-    [true, false, false, true],
-    [true, false, false, true],
-    [true, false, false, true],
-    [false, true, false, true],
+    [false, true, true, false, false],
+    [
+      false,
+      true,
+      false,
+      true,
+      false,
+    ],
+    [
+      false,
+      true,
+      true,
+      true,
+      false,
+    ],
+    [
+      false,
+      true,
+      true,
+      false,
+      false,
+    ],
+    [
+      true,
+      false,
+      false,
+      true,
+      false,
+    ],
+    [
+      true,
+      false,
+      true,
+      false,
+      false,
+    ],
+    [
+      true,
+      true,
+      false,
+      false,
+      false,
+    ],
+    [
+      true,
+      false,
+      false,
+      true,
+      false,
+    ],
+    [
+      false,
+      true,
+      false,
+      true,
+      false,
+    ],
+    [
+      false,
+      true,
+      true,
+      true,
+      false,
+    ],
+    [
+      true,
+      true,
+      true,
+      true,
+      true,
+    ],
+    [
+      false,
+      true,
+      true,
+      false,
+      false,
+    ],
+    [
+      true,
+      false,
+      false,
+      true,
+      false,
+    ],
+    [
+      true,
+      false,
+      true,
+      false,
+      false,
+    ],
+    [
+      true,
+      false,
+      false,
+      true,
+      false,
+    ],
   ];
 
   void _onPuzzleInitialized(
@@ -179,6 +263,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
             down: map[i - 1][1],
             left: map[i - 1][2],
             right: map[i - 1][3],
+            filled: map[i - 1][4],
           )
     ];
   }

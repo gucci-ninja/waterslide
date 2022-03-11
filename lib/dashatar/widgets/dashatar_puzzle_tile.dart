@@ -11,6 +11,7 @@ import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/theme/themes/themes.dart';
+import 'package:rive/rive.dart';
 
 abstract class _TileSize {
   static double small = 75;
@@ -55,6 +56,44 @@ class DashatarPuzzleTileState extends State<DashatarPuzzleTile>
   late AnimationController _controller;
   late Animation<double> _scale;
 
+  // Controller for playback
+  late SimpleAnimation _riveController;
+
+  // Toggles between play and pause animation states
+  void _togglePlay() =>
+      setState(() => _riveController.isActive = !_riveController.isActive);
+
+  // // Toggles between play and pause animation states
+  void _reset() => setState(() => _riveController = SimpleAnimation('idle'));
+
+  /// Tracks if the animation is playing by whether controller is running
+  bool get isPlaying => _riveController.isActive;
+
+  /// Is filled
+  bool isFilled = false;
+
+  bool _isPlaying = false;
+
+  void setIsFilled(bool filled) {
+    if (!filled) {
+      _riveController.reset();
+    } else {
+      _togglePlay();
+    }
+    // if (!filled) {
+    //   print("no longer filled");
+    //   _riveController.reset();
+    //   // _riveController = SimpleAnimation('idle');
+    // } else {
+    //   print("filled");
+    //   this._togglePlay();
+    //   // _riveController.reset();
+    //   // _riveController = SimpleAnimation('Animation 1');
+
+    // }
+    this.isFilled = filled;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -77,6 +116,15 @@ class DashatarPuzzleTileState extends State<DashatarPuzzleTile>
       _audioPlayer = widget._audioPlayerFactory()
         ..setAsset('assets/audio/tile_move.mp3');
     });
+
+    // widget.tile.left ? 'flowUp' : 'flowDown';
+    // _riveController = SimpleAnimation('fill', autoplay: false);
+    _riveController = OneShotAnimation(
+      'fill',
+      autoplay: false,
+      onStop: () => setState(() => _isPlaying = false),
+      onStart: () => setState(() => _isPlaying = true),
+    );
   }
 
   @override
@@ -102,6 +150,9 @@ class DashatarPuzzleTileState extends State<DashatarPuzzleTile>
         : const Duration(milliseconds: 370);
 
     final canPress = hasStarted && puzzleIncomplete;
+
+    final filled = widget.tile.filled;
+    setIsFilled(filled);
 
     return AudioControlListener(
       audioPlayer: _audioPlayer,
@@ -150,13 +201,10 @@ class DashatarPuzzleTileState extends State<DashatarPuzzleTile>
                         unawaited(_audioPlayer?.replay());
                       }
                     : null,
-                icon: Image.asset(
+                icon: RiveAnimation.asset(
                   theme.dashAssetForTile(widget.tile),
-                  semanticLabel: context.l10n.puzzleTileLabelText(
-                    widget.tile.value.toString(),
-                    widget.tile.currentPosition.x.toString(),
-                    widget.tile.currentPosition.y.toString(),
-                  ),
+                  animations: const ['unfill'],
+                  controllers: [_riveController],
                 ),
               ),
             ),

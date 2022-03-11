@@ -83,23 +83,33 @@ class Puzzle extends Equatable {
   /// Gets the number of tiles that are currently in their correct position.
   int getNumberOfCorrectTiles() {
     print(tiles);
-    // If the first tile is not getting water, return 0
-    if (!tiles[0].up && !tiles[0].left) {
-      return 0;
-    }
     final size = getDimension();
+    // If the first tile is not getting water, return 0
+    final startingIndex = _getWaterSource();
+    var row = startingIndex ~/ size;
+    var col = startingIndex % size;
+    print(row);
+    print(col);
+
     final array = List.generate(
         size, (i) => List.filled(size, -1, growable: false),
         growable: false);
-    array[0][0] = 1;
-    _dfs(0, 1, tiles[0], array, size);
-    _dfs(1, 0, tiles[0], array, size);
-    // final whitespaceTile = getWhitespaceTile();
+
     var numberOfCorrectTiles = 0;
+
+    array[row][col] = 1;
+    _dfs(row, col + 1, tiles[startingIndex], array, size);
+    _dfs(row, col - 1, tiles[startingIndex], array, size);
+    _dfs(row + 1, col, tiles[startingIndex], array, size);
+    _dfs(row - 1, col, tiles[startingIndex], array, size);
+
     for (var i = 0; i < size; i++) {
       for (var j = 0; j < size; j++) {
         if (array[i][j] == 1) {
+          tiles[i * size + j] = tiles[i * size + j].fillWithWater(true);
           numberOfCorrectTiles++;
+        } else {
+          tiles[i * size + j] = tiles[i * size + j].fillWithWater(false);
         }
       }
     }
@@ -132,6 +142,15 @@ class Puzzle extends Equatable {
     return;
   }
 
+  int _getWaterSource() {
+    for (var i = 0; i < tiles.length; i++) {
+      if (tiles[i].up && tiles[i].down && tiles[i].left && tiles[i].right) {
+        return i;
+      }
+    }
+    return 0;
+  }
+
   bool _isConnected(Tile curr, Tile prev) {
     final whitespaceTile = getWhitespaceTile();
     if (curr == whitespaceTile || prev == whitespaceTile) {
@@ -150,7 +169,7 @@ class Puzzle extends Equatable {
       return curr.up && prev.down;
     }
     // If above previous tile
-    if (prev.currentPosition.x - 1 == curr.currentPosition.y) {
+    if (prev.currentPosition.y - 1 == curr.currentPosition.y) {
       return curr.down && prev.up;
     }
     return false;

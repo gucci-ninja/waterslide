@@ -11,6 +11,7 @@ import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/timer/timer.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
+import 'package:rive/rive.dart';
 
 /// {@template puzzle_page}
 /// The root page of the puzzle UI.
@@ -319,6 +320,11 @@ class _PuzzleTile extends StatelessWidget {
     return tile.isWhitespace
         ? theme.layoutDelegate.whitespaceTileBuilder()
         : theme.layoutDelegate.tileBuilder(tile, state);
+    // return const Scaffold(
+    //   body: Center(
+    //     child: RiveAnimation.asset('animations/p1.riv'),
+    //   ),
+    // );
   }
 }
 
