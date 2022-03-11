@@ -14,7 +14,7 @@ abstract class DashatarTheme extends PuzzleTheme {
   const DashatarTheme() : super();
 
   @override
-  String get name => 'Dashatar';
+  String get name => '';
 
   @override
   String get audioControlOnAsset =>

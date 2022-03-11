@@ -72,6 +72,14 @@ class PuzzleView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    String themeColor = 'green';
+    if (theme == GreenDashatarTheme()) {
+      themeColor = 'green';
+    } else if (theme == YellowDashatarTheme()) {
+      themeColor = 'yellow';
+    } else if (theme == BlueDashatarTheme()) {
+      themeColor = 'blue';
+    }
 
     /// Shuffle only if the current theme is Simple.
     final shufflePuzzle = false;
@@ -93,7 +101,7 @@ class PuzzleView extends StatelessWidget {
                 ),
               ),
               BlocProvider(
-                create: (context) => PuzzleBloc(4)
+                create: (context) => PuzzleBloc(4, themeColor)
                   ..add(
                     PuzzleInitialized(
                       shufflePuzzle: shufflePuzzle,

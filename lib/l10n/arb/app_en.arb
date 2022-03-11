@@ -8,7 +8,7 @@
     "@puzzleRestartTooltip": {
         "description": "Shown as a tooltip for the puzzle restart button"
     },
-    "puzzleChallengeTitle": "Puzzle Challenge",
+    "puzzleChallengeTitle": "Connect all pipes to the water source.",
     "@puzzleChallengeTitle": {
         "description": "Shown as the title of the puzzle"
     },
@@ -84,7 +84,7 @@
             }
         }
     },
-    "puzzleNumberOfMovesAndTilesLeftLabelText": "Moves: {numberOfMoves}, tiles: {tilesLeft}",
+    "puzzleNumberOfMovesAndTilesLeftLabelText": "Moves: {numberOfMoves}, tiles: {tilesLeft}/15",
     "@puzzleNumberOfMovesAndTilesLeftLabelText": {
         "description": "Semantic label for the puzzle tile",
         "placeholders": {

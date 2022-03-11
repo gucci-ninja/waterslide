@@ -80,7 +80,7 @@ class NumberOfMovesAndTilesLeft extends StatelessWidget {
                     color: textColor,
                   ),
                   duration: PuzzleThemeAnimationDuration.textStyle,
-                  child: Text(numberOfTilesLeft.toString()),
+                  child: Text(' ${numberOfTilesLeft.toString()}/15'),
                 ),
                 AnimatedDefaultTextStyle(
                   style: bodyTextStyle.copyWith(

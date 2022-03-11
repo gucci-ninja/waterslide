@@ -81,7 +81,6 @@ class Puzzle extends Equatable {
 
   /// Gets the number of tiles that are currently in their correct position.
   int getNumberOfCorrectTiles() {
-    print(tiles);
     final size = getDimension();
     // If the first tile is not getting water, return 0
     final startingIndex = _getWaterSource();

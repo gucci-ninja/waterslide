@@ -10,7 +10,8 @@ part 'puzzle_event.dart';
 part 'puzzle_state.dart';
 
 class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
-  PuzzleBloc(this._size, {this.random}) : super(const PuzzleState()) {
+  PuzzleBloc(this._size, this._theme, {this.random})
+      : super(const PuzzleState()) {
     on<PuzzleInitialized>(_onPuzzleInitialized);
     on<TileTapped>(_onTileTapped);
     on<PuzzleReset>(_onPuzzleReset);
@@ -18,109 +19,27 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   final int _size;
 
+  final String _theme;
+
   final Random? random;
 
   // Image value acts as key, value is [up, down, left, right]
-  final map = [
+  final greenMap = [
     [false, true, true, false, false],
-    [
-      false,
-      true,
-      false,
-      true,
-      false,
-    ],
-    [
-      false,
-      true,
-      true,
-      true,
-      false,
-    ],
-    [
-      false,
-      true,
-      true,
-      false,
-      false,
-    ],
-    [
-      true,
-      false,
-      false,
-      true,
-      false,
-    ],
-    [
-      true,
-      false,
-      true,
-      false,
-      false,
-    ],
-    [
-      true,
-      true,
-      false,
-      false,
-      false,
-    ],
-    [
-      true,
-      false,
-      false,
-      true,
-      false,
-    ],
-    [
-      false,
-      true,
-      false,
-      true,
-      false,
-    ],
-    [
-      false,
-      true,
-      true,
-      true,
-      false,
-    ],
-    [
-      true,
-      true,
-      true,
-      true,
-      true,
-    ],
-    [
-      false,
-      true,
-      true,
-      false,
-      false,
-    ],
-    [
-      true,
-      false,
-      false,
-      true,
-      false,
-    ],
-    [
-      true,
-      false,
-      true,
-      false,
-      false,
-    ],
-    [
-      true,
-      false,
-      false,
-      true,
-      false,
-    ],
+    [false, true, false, true, false],
+    [false, true, true, true, false],
+    [false, true, true, false, false],
+    [true, false, false, true, false],
+    [true, false, true, false, false],
+    [true, true, false, false, false],
+    [true, false, false, true, false],
+    [false, true, false, true, false],
+    [false, true, true, true, false],
+    [true, true, true, true, true],
+    [false, true, true, false, false],
+    [true, false, false, true, false],
+    [true, false, true, false, false],
+    [true, false, false, true, false],
   ];
 
   void _onPuzzleInitialized(
@@ -245,6 +164,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     List<Position> currentPositions,
   ) {
     final whitespacePosition = Position(x: size, y: size);
+    final map = _getMapFromTheme();
     return [
       for (int i = 1; i <= size * size; i++)
         if (i == size * size)
@@ -266,5 +186,9 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
             filled: map[i - 1][4],
           )
     ];
+  }
+
+  List<List<bool>> _getMapFromTheme() {
+    return greenMap;
   }
 }
