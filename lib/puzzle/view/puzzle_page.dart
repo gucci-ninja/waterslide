@@ -57,6 +57,16 @@ class PuzzlePage extends StatelessWidget {
       ],
       child: const PuzzleView(),
     );
+    // child: Banner(
+    //   message: 'WINNER',
+    //   location: BannerLocation.topStart,
+    //   color: Color(0xFFFFC247),
+    //   textStyle: TextStyle(
+    //       color: Color(0xFF735720),
+    //       fontWeight: FontWeight.bold,
+    //       fontSize: 12),
+    //   child: const PuzzleView(),
+    // ));
   }
 }
 

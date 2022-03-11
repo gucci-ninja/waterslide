@@ -2,18 +2,6 @@
 
 ![Photo Booth Header][logo]
 
-![coverage][coverage_badge]
-[![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
-[![License: MIT][license_badge]][license_link]
-
-A slide puzzle built for [Flutter Challenge](https://flutterhack.devpost.com/).
-
-*Built by [Very Good Ventures][very_good_ventures_link] in partnership with Google.*
-
-*Created using [Very Good CLI][very_good_cli_link].*
-
----
-
 ## Getting Started 🚀
 
 To run the project either use the launch configuration in VSCode/Android Studio or use the following command:
@@ -44,104 +32,33 @@ $ open coverage/index.html
 
 ---
 
-## Working with Translations 🌐
+## Inspiration
+I got the inspiration for the project from one of my first coding projects! Back in high school I built a tunnel game where the user had to rotate pipes to make them connect. This is similar but with sliding. I've come a long way since then!
 
-This project relies on [flutter_localizations][flutter_localizations_link] and follows the [official internationalization guide for Flutter][internationalization_link].
+## What it does
+Water Slide's objective is to slide the tiles around until all of them are in some way connected to the water source. The water source is the cross pipe.
 
-### Adding Strings
+## How we built it
+For the animation I used Rive. Each tile has a `fill` and `unfill` animation that gets toggled on and off using the Rive Controller. I used 2 layers for the water - a lighter shade that goes in one direction and a darker shade that goes in the other. 
 
-1. To add a new localizable string, open the `app_en.arb` file at `lib/l10n/arb/app_en.arb`.
+For the puzzle logic I implemented a depth first search graph traversal algorithm (never thought I'd use it IRL). I also added extra attributes to the tiles to determine what kind of pipe it is.
 
-```arb
-{
-    "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
-    }
-}
-```
+Lastly, I deployed the project using Vercel
 
-2. Then add a new key/value and description
+## Challenges we ran into
+One of the main challenges was animating the water so it looks fluid. It took a lot of trial and error until I finally got something I was happy with.
 
-```arb
-{
-    "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
-    },
-    "helloWorld": "Hello World",
-    "@helloWorld": {
-        "description": "Hello World Text"
-    }
-}
-```
+Another challenge was the code. I went off the existing source code provided in the resources so I spent some time figuring out where everything was and what I would need to change.
 
-3. Use the new string
+## Accomplishments that we're proud of
+Building a working game that's actually fun to play. I shared it with friends and family and they all seem to enjoy it.
 
-```dart
-import 'package:very_good_slide_puzzle/l10n/l10n.dart';
+## What we learned
+I learned that water is NOT easy to animate. And in general animation is very difficult. Thanks to Rive it made my job a little easier. Overall it was a very fun and rewarding experience.
 
-@override
-Widget build(BuildContext context) {
-  final l10n = context.l10n;
-  return Text(l10n.helloWorld);
-}
-```
+## What's next for Water Slide
+I really want to add more levels in the future as well as a leaderboard (which was requested by a few)
 
-### Adding Supported Locales
-
-Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info.plist` to include the new locale.
-
-```xml
-    ...
-
-    <key>CFBundleLocalizations</key>
-	<array>
-		<string>en</string>
-		<string>es</string>
-	</array>
-
-    ...
-```
-
-### Adding Translations
-
-1. For each supported locale, add a new ARB file in `lib/l10n/arb`.
-
-```
-├── l10n
-│   ├── arb
-│   │   ├── app_en.arb
-│   │   └── app_es.arb
-```
-
-2. Add the translated strings to each `.arb` file:
-
-`app_en.arb`
-
-```arb
-{
-    "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
-    }
-}
-```
-
-`app_es.arb`
-
-```arb
-{
-    "@@locale": "es",
-    "counterAppBarTitle": "Contador",
-    "@counterAppBarTitle": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
-    }
-}
-```
 
 [coverage_badge]: coverage_badge.svg
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
