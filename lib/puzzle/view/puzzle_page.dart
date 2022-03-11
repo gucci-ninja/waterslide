@@ -7,7 +7,6 @@ import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
-// import 'package:very_good_slide_puzzle/simple/simple.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/timer/timer.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
@@ -320,11 +319,6 @@ class _PuzzleTile extends StatelessWidget {
     return tile.isWhitespace
         ? theme.layoutDelegate.whitespaceTileBuilder()
         : theme.layoutDelegate.tileBuilder(tile, state);
-    // return const Scaffold(
-    //   body: Center(
-    //     child: RiveAnimation.asset('animations/p1.riv'),
-    //   ),
-    // );
   }
 }
 

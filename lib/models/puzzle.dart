@@ -76,7 +76,6 @@ class Puzzle extends Equatable {
         }
       }
     }
-    print(numberOfCorrectTiles);
     return numberOfCorrectTiles;
   }
 
@@ -88,8 +87,6 @@ class Puzzle extends Equatable {
     final startingIndex = _getWaterSource();
     var row = startingIndex ~/ size;
     var col = startingIndex % size;
-    print(row);
-    print(col);
 
     final array = List.generate(
         size, (i) => List.filled(size, -1, growable: false),
@@ -113,7 +110,6 @@ class Puzzle extends Equatable {
         }
       }
     }
-    print(numberOfCorrectTiles);
     return numberOfCorrectTiles;
   }
 

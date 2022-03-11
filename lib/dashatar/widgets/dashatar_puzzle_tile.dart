@@ -80,17 +80,6 @@ class DashatarPuzzleTileState extends State<DashatarPuzzleTile>
     } else {
       _togglePlay();
     }
-    // if (!filled) {
-    //   print("no longer filled");
-    //   _riveController.reset();
-    //   // _riveController = SimpleAnimation('idle');
-    // } else {
-    //   print("filled");
-    //   this._togglePlay();
-    //   // _riveController.reset();
-    //   // _riveController = SimpleAnimation('Animation 1');
-
-    // }
     this.isFilled = filled;
   }
 
@@ -117,8 +106,6 @@ class DashatarPuzzleTileState extends State<DashatarPuzzleTile>
         ..setAsset('assets/audio/tile_move.mp3');
     });
 
-    // widget.tile.left ? 'flowUp' : 'flowDown';
-    // _riveController = SimpleAnimation('fill', autoplay: false);
     _riveController = OneShotAnimation(
       'fill',
       autoplay: false,
